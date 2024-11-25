@@ -15,7 +15,14 @@ export default function Home() {
   function getRoomId() {
     axios.get("http://localhost:3500").then((res) => {
       socket.emit("room_id", res.data)
+      console.log(res.data)
       roomId.current = res.data
+      socket.on(roomId.current, (data) => {
+        console.log(data)
+        if (data.type === "add_music") {
+          player.current?.loadVideoById(data.data)
+        }
+      })
     })
   }
 
@@ -40,12 +47,12 @@ export default function Home() {
     global.onYouTubePlayerAPIReady = onYouTubePlayerAPIReady
     // 2. get player.playerInfo.currentTime
     window.onclick = () => {
-      socket.emit(roomId.current, player.current?.playerInfo?.currentTime)
-      socket.emit("reply", player.current?.playerInfo?.currentTime)
+      console.log(roomId.current, player.current?.playerInfo?.currentTime)
       player.current?.playVideo()
       player.current?.loadVideoById("AycijooNahI")
     }
   }
+
   return (
     <div>
       <div id="ytplayer"></div>

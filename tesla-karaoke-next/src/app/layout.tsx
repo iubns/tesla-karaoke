@@ -30,7 +30,7 @@ export default function RootLayout({
         src="http://localhost:3500/socket.io/socket.io.js"
         strategy="beforeInteractive"
       />
-      <Script src="./socket.js" strategy="afterInteractive" />
+      <Script src="./socket.js" strategy="beforeInteractive" />
 
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
